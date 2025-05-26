@@ -1,18 +1,113 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Web OCR with Camera</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCR App</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #e0f7fa, #b3e5fc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: #ffffffcc;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    h1 {
+      color: #01579b;
+      margin-bottom: 20px;
+    }
+
+    #preview {
+      width: 100%;
+      border: 2px dashed #0288d1;
+      background-color: #e1f5fe;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 8px;
+      color: #0288d1;
+      font-size: 14px;
+    }
+
+    input[type="file"] {
+      padding: 8px;
+      border: 1px solid #0288d1;
+      border-radius: 6px;
+      background-color: #e1f5fe;
+      color: #01579b;
+      width: 100%;
+    }
+
+    button {
+      background-color: #0288d1;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      margin-top: 15px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #0277bd;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <h2>Capture Image for OCR</h2>
-    <video id="video" width="400" autoplay></video><br>
-    <button id="snap">📸 Capture & OCR</button>
-    <canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
+  <div class="container">
+    <h1>🔷 OCR Text Extractor</h1>
 
-    <form id="uploadForm" method="post" action="/upload">
-        <input type="hidden" name="imageData" id="imageData">
+    <div id="preview">Image preview will appear here</div>
+
+    <form id="uploadForm" method="POST" action="/upload">
+      <input type="file" accept="image/*" onchange="previewImage(event)">
+      <input type="hidden" name="imageData" id="imageData">
+      <button type="submit">📤 Upload & Extract</button>
     </form>
+  </div>
 
-    <script src="/static/capture.js"></script>
+  <script>
+    function previewImage(event) {
+      const preview = document.getElementById('preview');
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        preview.innerHTML = `<img src="${e.target.result}" style="max-width: 100%; border-radius: 8px;" />`;
+        document.getElementById('imageData').value = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  </script>
 </body>
 </html>
