@@ -1,23 +1,25 @@
+// static/capture.js
 const video = document.getElementById('video');
 const canvas = document.getElementById('canvas');
-const snap = document.getElementById('snap');
-const imageDataField = document.getElementById('imageData');
-const uploadForm = document.getElementById('uploadForm');
+const snapButton = document.getElementById('snap');
+const imageDataInput = document.getElementById('imageData');
+const form = document.getElementById('uploadForm');
 
-// Get camera stream
+// Get access to the camera
 navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        video.srcObject = stream;
-    })
-    .catch(err => {
-        alert("Camera access denied or not available: " + err);
-    });
+  .then(stream => {
+    video.srcObject = stream;
+  })
+  .catch(err => {
+    console.error("Error accessing camera: ", err);
+  });
 
-// Capture image and send to server
-snap.addEventListener("click", () => {
-    const context = canvas.getContext('2d');
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    const imageDataURL = canvas.toDataURL('image/png');
-    imageDataField.value = imageDataURL;
-    uploadForm.submit();
+// On capture button click
+snapButton.addEventListener('click', () => {
+  const context = canvas.getContext('2d');
+  context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+  const dataURL = canvas.toDataURL('image/png');
+  imageDataInput.value = dataURL;
+  form.submit();
 });
