@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: ocrapp
+    env: python
+    buildCommand: |
+      apt-get update
+      apt-get install -y tesseract-ocr
+      pip install -r requirements.txt
+    startCommand: python ocrapp.py
+    envVars:
+      - key: TESSERACT_CMD
+        value: /usr/bin/tesseract
