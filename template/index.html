@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Web OCR with Camera</title>
+</head>
+<body>
+    <h2>Capture Image for OCR</h2>
+    <video id="video" width="400" autoplay></video><br>
+    <button id="snap">📸 Capture & OCR</button>
+    <canvas id="canvas" width="400" height="300" style="display:none;"></canvas>
+
+    <form id="uploadForm" method="post" action="/upload">
+        <input type="hidden" name="imageData" id="imageData">
+    </form>
+
+    <script src="/static/capture.js"></script>
+</body>
+</html>
