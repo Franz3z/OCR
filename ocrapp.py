@@ -5,7 +5,7 @@ import pytesseract
 import base64
 from io import BytesIO
 
-pytesseract.pytesseract.tesseract_cmd = os.getenv('TESSERACT_CMD', 'C:\Program Files\Tesseract-OCR\tesseract.exe
+pytesseract.pytesseract.tesseract_cmd = os.getenv('TESSERACT_CMD', r'C:\Program Files\Tesseract-OCR\tesseract.exe
 ')
 
 app = Flask(__name__)
